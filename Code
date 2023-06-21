@@ -1,0 +1,51 @@
+int enB = 9;//hız
+int in3 = 8;//yukari
+int in4 = 7;//asagi
+int yukaribtn=6;
+int asagibtn=5;
+int kesbtn=4;
+int ybtndurum=0; 
+int abtndurum=0;
+int kbtndurum=0;
+void setup() {
+  pinMode(enB, OUTPUT); //pwm 
+  pinMode(in3, OUTPUT); // yukarı
+  pinMode(in4, OUTPUT);//aşağı
+  pinMode(yukaribtn,INPUT);//yukarı buton 
+  pinMode(asagibtn,INPUT);//aşşağı buton
+  pinMode(kesbtn,INPUT);//kontrol butonu
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+void loop() {
+  ybtndurum=digitalRead(yukaribtn);//yukarı buton durumunu oku 
+  abtndurum=digitalRead(asagibtn);// aşşağı buton durumunu oku
+  if(ybtndurum == 1 && abtndurum == 0){ // yukarı butonuna basıldı ise yukarı çık fonksiyonunu çağır
+    yukaricik();
+  }
+  else if(ybtndurum == 0 && abtndurum == 1){// aşşağı butonuna basıldı ise yukarı çık fonksiyonunu çağır
+    asagiin();
+  }
+  else{ // hiçbir butona basılmadı ise dur
+    dur();
+  }
+  }
+  int yukaricik(){
+    analogWrite(enB,250);//hız
+    digitalWrite(in3,1);//yukarı yön
+    digitalWrite(in4,0);//aşşağı yön
+  }
+  int asagiin(){
+    //kbtndurum=digitalRead(kesbtn);
+    analogWrite(enB,250);//hız
+    digitalWrite(in3,0);//yukarı yön
+    digitalWrite(in4,1);//aşşağı yön
+    if(kbtndurum==1) {//kontrol butonuna basıldı ise dur fonksiyonunu çağır
+      dur();
+    }
+  }
+  int dur(){
+    analogWrite(enB,0);
+    digitalWrite(in3,0);
+    digitalWrite(in4,0);
+}
